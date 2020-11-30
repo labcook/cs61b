@@ -5,7 +5,7 @@ public class Planet  {
 	public double yyVel;//Its current velocity in the y direction
 	public double mass;//Its mass
 	public String imgFileName;//The name of the file that corresponds to the image that depicts the planet
-	public static final double G = 6.67e-11;
+	private static final double G = 6.67e-11;
 
 	public Planet(double xP, double yP, double xV,double yV, double m, String img){
 		xxPos = xP; yyPos = yP; xxVel = xV; yyVel = yV; mass = m; imgFileName = img;
@@ -20,7 +20,7 @@ public class Planet  {
 		imgFileName = p.imgFileName;
 	}
 
-	public boolean equal(Planet p){
+	private boolean equal(Planet p){
 		if((this.xxPos == p.xxPos)&&(this.yyPos == p.yyPos)&&(this.xxVel == p.xxVel)&&(this.yyVel == p.yyVel)&&(this.mass == p.mass)&&(this.imgFileName == p.imgFileName))
 			return true;
 		return false;
