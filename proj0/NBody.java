@@ -2,14 +2,13 @@ public class NBody{
 	public static double readRadius(String s){
 		In in = new In(s);
 		int N = in.readInt();
-		double r = in.readDouble();
-		return r;
+		return in.readDouble();
 	}	
 
 	public static Planet[] readPlanets(String s){
 		In in = new In(s);
 		int N = in.readInt();
-		Planet p[] = new Planet[N];
+		Planet[] p = new Planet[N];
 		double r = in.readDouble();
 		//first read the parameters, then use the instructor to make a planet.
 		for(int i = 0; i < N; i++){
@@ -36,8 +35,8 @@ public class NBody{
 		StdDraw.clear();
 		StdDraw.picture(0, 0, "./images/starfield.jpg");
 		StdDraw.show();
-		for(int i = 0; i < planets.length; i++){
-			planets[i].draw();
+		for (Planet planet : planets) {
+			planet.draw();
 		}
 		StdDraw.enableDoubleBuffering();
 		for (double time=0; time <= T; time+= dt) {
