@@ -102,6 +102,7 @@ public class IntList {
             if(B == null){
                 return null;
             }else{
+                //A is empty, B is not Empty
                 IntList res = new IntList(B.first,B.rest);
                 IntList ptr = res;
                 B = B.rest;
@@ -113,6 +114,7 @@ public class IntList {
                 return res;
             }
         }else{
+            // A is not empty.
             IntList res = new IntList(A.first,A.rest);
             IntList ptr = res;
             A = A.rest;
