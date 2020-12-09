@@ -268,8 +268,23 @@ public class IntList {
         out.format(")");
         return out.toString();
     }
+
     public static IntList reverse(IntList A){
-        return null;
+        if(A == null || A.rest == null) return A;
+        else{
+            IntList first = A;
+            IntList second = A.rest;
+            IntList third = A.rest.rest;
+            A.rest = null;
+            while(third != null){
+                second.rest = first;
+                first = second;
+                second = third;
+                third = third.rest;
+            }
+            second.rest = first;
+            return second;
+        }
     }
 }
 
