@@ -12,15 +12,38 @@ public class ArrayDeque<T> {
         nextLast = 1;
     }
 
-    private void resize(int capacity) {
+    private void addResize(int capacity) {
         T[] a = (T []) new Object[capacity];
-        System.arraycopy(items, 0, a, 0, size);
+        // hard to imagine
+        int rem = size-(nextFirst+1)%items.length;
+        System.arraycopy(items, (nextFirst+1)%items.length, a, 0, rem);
+        System.arraycopy(items, 0, a, rem, size-rem);
         items = a;
+        nextLast = size;
+        nextFirst = items.length-1;
+    }
+
+    private void removeResize(int capacity) {
+        T[] a = (T []) new Object[capacity];
+        // hard to imagine
+        if(nextLast > nextFirst){
+            System.arraycopy(items, (nextFirst+1)%items.length, a, 0, size);
+            items = a;
+            nextLast = size;
+            nextFirst = items.length-1;
+        }else{
+            int rem = items.length-(nextFirst+1);
+            System.arraycopy(items, (nextFirst+1)%items.length, a, 0, rem);
+            System.arraycopy(items, 0, a, rem, size-rem);
+            items = a;
+            nextLast = size;
+            nextFirst = items.length-1;
+        }
     }
 
     public void addLast(T item) {
         if (size == items.length) {
-            resize(size * 2);
+            addResize(size * 2);
         }
         items[nextLast] = item;
         size += 1;
@@ -29,7 +52,7 @@ public class ArrayDeque<T> {
 
     public void addFirst(T item) {
         if (size == items.length) {
-            resize(size * 2);
+            addResize(size * 2);
         }
         items[nextFirst] = item;
         size += 1;
@@ -60,7 +83,7 @@ public class ArrayDeque<T> {
         size -= 1;
         nextFirst = (nextFirst+1)%items.length;
         if(size < items.length/4){
-            resize(size/2);
+            removeResize(size/2);
         }
         return  res;
     }
@@ -71,7 +94,7 @@ public class ArrayDeque<T> {
         size -= 1;
         nextLast = (nextLast-1)%items.length;
         if(size < items.length/4){
-            resize(size/2);
+            removeResize(size/2);
         }
         return  res;
     }
