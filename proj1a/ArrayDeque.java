@@ -32,7 +32,7 @@ public class ArrayDeque<T> {
 
     public void addLast(T item) {
         if (size == items.length) {
-            resize(size * 2);
+            resize(items.length * 2);
         }
         items[nextLast] = item;
         size += 1;
@@ -41,7 +41,7 @@ public class ArrayDeque<T> {
 
     public void addFirst(T item) {
         if (size == items.length) {
-            resize(size * 2);
+            resize(items.length * 2);
         }
         items[nextFirst] = item;
         size += 1;
@@ -79,7 +79,7 @@ public class ArrayDeque<T> {
         items[nextFirst] = null;
         size -= 1;
         if ((double) size / items.length < 0.25 && items.length >= 16) {
-            resize(size / 2);
+            resize(items.length / 2);
         }
         return  res;
     }
@@ -93,7 +93,7 @@ public class ArrayDeque<T> {
         items[nextLast] = null;
         size -= 1;
         if ((double) size / items.length < 0.25 && items.length >= 16) {
-            resize(size / 2);
+            resize(items.length / 2);
         }
         return  res;
     }
@@ -121,8 +121,11 @@ public class ArrayDeque<T> {
 //        test.addLast(7);
 //        test.addLast(8);
 //        test.addLast(9);
-//        System.out.print(test.size);
+//        System.out.println(test.size);
 //        test.printDeque();
+//        System.out.println(test.get(8));
+//        System.out.println(test.get(1));
+//        System.out.println(test.get(0));
 //    }
 
 }
