@@ -76,10 +76,10 @@ public class ArrayDeque<T> {
         }
         nextFirst = (nextFirst + 1) % items.length;
         T res = items[nextFirst];
-        size -= 1;
-        if ((double) size / items.length < 0.25 && items.length > 16) {
+        if ((double) size / items.length < 0.25 && items.length >= 16) {
             resize(size / 2);
         }
+        size -= 1;
         return  res;
     }
 
@@ -90,10 +90,10 @@ public class ArrayDeque<T> {
         nextLast = (nextLast - 1 + items.length) % items.length;
         T res = items[nextLast];
         items[nextLast] = null;
-        size -= 1;
-        if ((double) size / items.length < 0.25 && items.length > 16) {
+        if ((double) size / items.length < 0.25 && items.length >= 16) {
             resize(size / 2);
         }
+        size -= 1;
         return  res;
     }
 
