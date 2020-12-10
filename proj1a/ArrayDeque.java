@@ -16,7 +16,7 @@ public class ArrayDeque<T> {
     private void resize(int capacity) {
         T[] a = (T []) new Object[capacity];
         int startPos = a.length / 2 - size / 2;
-        int oldIndex = nextFirst + 1;
+        int oldIndex = (nextFirst + 1) % items.length;
         int newIndex = startPos;
         int count = 0;
         while (count < size) {
