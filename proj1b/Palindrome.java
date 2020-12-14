@@ -40,7 +40,7 @@ public class Palindrome {
             while (front < rear) {
                 char f = word.charAt(front);
                 char r = word.charAt(rear);
-                if (cc.equalChars(f,r)) {
+                if (cc.equalChars(f, r)) {
                     front += 1;
                     rear -= 1;
                 } else {

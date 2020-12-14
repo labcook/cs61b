@@ -28,10 +28,10 @@ public class TestPalindrome {
     @Test
     public void testIsPalindromeWithCC() {
         CharacterComparator cc = new OffByOne();
-        assertTrue(palindrome.isPalindrome("racecar",cc));
-        assertTrue(palindrome.isPalindrome("a",cc));
-        assertTrue(palindrome.isPalindrome("",cc));
-        assertTrue(palindrome.isPalindrome("noon",cc));
-        assertFalse(palindrome.isPalindrome("horse",cc));
+        assertTrue(palindrome.isPalindrome("racecar", cc));
+        assertTrue(palindrome.isPalindrome("a", cc));
+        assertTrue(palindrome.isPalindrome("", cc));
+        assertTrue(palindrome.isPalindrome("noon", cc));
+        assertFalse(palindrome.isPalindrome("horse", cc));
     }
 }
