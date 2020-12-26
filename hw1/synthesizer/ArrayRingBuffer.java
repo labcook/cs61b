@@ -1,5 +1,7 @@
 package synthesizer;
 
+import java.util.Iterator;
+
 public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
     /* Index for the next dequeue or peek. */
     private int first;            // index for the next dequeue or peek
@@ -62,4 +64,55 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
         }
     }
 
+    @Override
+    public Iterator<T> iterator() {
+        return new KeyIterator();
+    }
+
+    private class KeyIterator implements Iterator<T> {
+        private int pos;
+        private int cnt;
+
+        KeyIterator() {
+            pos = first;
+            cnt = 0;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return cnt < fillCount();
+        }
+
+        @Override
+        public T next() {
+            T res = rb[pos];
+            pos = (pos + 1) % capacity();
+            cnt += 1;
+            return res;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = pos;
+            result = 31 * result + cnt;
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+
+            KeyIterator that = (KeyIterator) o;
+
+            if (pos != that.pos) {
+                return false;
+            }
+            return cnt == that.cnt;
+        }
+    }
 }
