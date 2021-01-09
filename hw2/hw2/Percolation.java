@@ -3,18 +3,21 @@ package hw2;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
-    boolean[][] pool;
-    int N;
-    int openedSites;
-    int top, bottom;
-    WeightedQuickUnionUF u;
-    WeightedQuickUnionUF uu;
+    private boolean[][] pool;
+    private int N;
+    private int openedSites;
+    private int top, bottom;
+    private WeightedQuickUnionUF u;
+    private WeightedQuickUnionUF uu;
 
     private int xyTo1D(int row, int col) {
         return N * row + col;
     }
 
     public Percolation(int N) {
+        if (N <= 0) {
+            throw new java.lang.IllegalArgumentException();
+        }
         pool = new boolean[N][N];
         this.N = N;
         u = new WeightedQuickUnionUF(N * N + 2);
@@ -67,8 +70,13 @@ public class Percolation {
     }
 
     public boolean percolates() {
+        if (N == 1) {
+            return numberOfOpenSites() == 1 && u.connected(top, bottom);
+        }
         return u.connected(top, bottom);
     }
 
-//    public static void main(String[] args)
+    public static void main(String[] args) {
+        return;
+    }
 }
