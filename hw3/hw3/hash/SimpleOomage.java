@@ -39,7 +39,7 @@ public class SimpleOomage implements Oomage {
         if (!USE_PERFECT_HASH) {
             return red + green + blue;
         } else {
-            return (red * 31 + green) * 31 + blue;
+            return (red / 5 * 31 + green / 5) * 31 + blue / 5;
         }
     }
 
@@ -50,9 +50,9 @@ public class SimpleOomage implements Oomage {
         if ((r % 5 != 0) || (g % 5 != 0) || (b % 5 != 0)) {
             throw new IllegalArgumentException("red/green/blue values must all be multiples of 5!");
         }
-        red = r / 5;
-        green = g / 5;
-        blue = b / 5;
+        red = r;
+        green = g;
+        blue = b;
     }
 
     @Override
