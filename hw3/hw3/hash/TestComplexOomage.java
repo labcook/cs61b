@@ -48,7 +48,7 @@ public class TestComplexOomage {
             }
 
             for (int j = 0; j < 4; j += 1) { // Add additional fixed 32 bits integers
-                params.add(j);
+                params.add(9);
             }
 
             deadlyList.add(new ComplexOomage(params));
