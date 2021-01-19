@@ -71,25 +71,28 @@ public class MergeSort {
      */
     public static <Item extends Comparable> Queue<Item> mergeSort(
             Queue<Item> items) {
-        int len = items.size();
-        Queue<Queue<Item>> q = MergeSort.makeSingleItemQueues(items);
-        while (q.size() >= 2) {
-            Queue<Item> t1 = q.dequeue();
-            Queue<Item> t2 = q.dequeue();
-            Queue<Item> t3 = MergeSort.mergeSortedQueues(t1, t2);
-            q.enqueue(t3);
+        if (items.size() <= 1) {
+            return items;
         }
-        Queue<Item> res = q.dequeue();
-        return res;
+        Queue<Queue<Item>> queues = makeSingleItemQueues(items);
+        Queue<Item> qLeft = new Queue<>();
+        Queue<Item> qRight = new Queue<>();
+        int leftSize = queues.size() / 2; // Make left queue
+        for (int i = 0; i < leftSize; i += 1) {
+            qLeft.enqueue(queues.dequeue().dequeue());
+        }
+        int rightSize = queues.size(); // Make right queue
+        for (int i = 0; i < rightSize; i += 1) {
+            qRight.enqueue(queues.dequeue().dequeue());
+        }
+        Queue<Item> q1 = mergeSort(qLeft);
+        Queue<Item> q2 = mergeSort(qRight);
+        return mergeSortedQueues(q1, q2);
     }
 
     public static void main(String[] args) {
         Queue<Integer> q = new Queue<>();
         q.enqueue(102);
-        q.enqueue(32);
-        q.enqueue(55);
-        q.enqueue(28);
-        q.enqueue(44);
         System.out.println("Original Queue");
         for (int x : q) {
             System.out.print(x + " ");
