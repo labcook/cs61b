@@ -3,7 +3,7 @@ import edu.princeton.cs.algs4.Queue;
 public class QuickSort {
     /**
      * Returns a new queue that contains the given queues catenated together.
-     *
+     * <p>
      * The items in q2 will be catenated after all of the items in q1.
      */
     private static <Item extends Comparable> Queue<Item> catenate(Queue<Item> q1, Queue<Item> q2) {
@@ -11,13 +11,15 @@ public class QuickSort {
         for (Item item : q1) {
             catenated.enqueue(item);
         }
-        for (Item item: q2) {
+        for (Item item : q2) {
             catenated.enqueue(item);
         }
         return catenated;
     }
 
-    /** Returns a random item from the given queue. */
+    /**
+     * Returns a random item from the given queue.
+     */
     private static <Item extends Comparable> Item getRandomItem(Queue<Item> items) {
         int pivotIndex = (int) (Math.random() * items.size());
         Item pivot = null;
@@ -35,25 +37,69 @@ public class QuickSort {
     /**
      * Partitions the given unsorted queue by pivoting on the given item.
      *
-     * @param unsorted  A Queue of unsorted items
-     * @param pivot     The item to pivot on
-     * @param less      An empty Queue. When the function completes, this queue will contain
-     *                  all of the items in unsorted that are less than the given pivot.
-     * @param equal     An empty Queue. When the function completes, this queue will contain
-     *                  all of the items in unsorted that are equal to the given pivot.
-     * @param greater   An empty Queue. When the function completes, this queue will contain
-     *                  all of the items in unsorted that are greater than the given pivot.
+     * @param unsorted A Queue of unsorted items
+     * @param pivot    The item to pivot on
+     * @param less     An empty Queue. When the function completes, this queue will contain
+     *                 all of the items in unsorted that are less than the given pivot.
+     * @param equal    An empty Queue. When the function completes, this queue will contain
+     *                 all of the items in unsorted that are equal to the given pivot.
+     * @param greater  An empty Queue. When the function completes, this queue will contain
+     *                 all of the items in unsorted that are greater than the given pivot.
      */
     private static <Item extends Comparable> void partition(
             Queue<Item> unsorted, Item pivot,
             Queue<Item> less, Queue<Item> equal, Queue<Item> greater) {
-        // Your code here!
+        for (Item x : unsorted) {
+            if (x.compareTo(pivot) < 0) {
+                less.enqueue(x);
+            } else if (x.compareTo(pivot) > 0) {
+                greater.enqueue(x);
+            } else {
+                equal.enqueue(x);
+            }
+        }
     }
 
-    /** Returns a Queue that contains the given items sorted from least to greatest. */
+    /**
+     * Returns a Queue that contains the given items sorted from least to greatest.
+     */
     public static <Item extends Comparable> Queue<Item> quickSort(
             Queue<Item> items) {
-        // Your code here!
-        return items;
+        if (items.size() <= 1) {
+            return items;
+        }
+
+        Queue<Item> less = new Queue<>();
+        Queue<Item> equal = new Queue<>();
+        Queue<Item> greater = new Queue<>();
+        Item pivot = getRandomItem(items);
+        partition(items, pivot, less, equal, greater);
+
+        Queue<Item> sortedLess = quickSort(less);
+        Queue<Item> sortedGreater = quickSort(greater);
+
+        Queue<Item> res = catenate(sortedLess, equal);
+        res = catenate(res, sortedGreater);
+
+        return res;
+    }
+
+    public static void main(String[] args) {
+        Queue<Integer> q = new Queue<>();
+        q.enqueue(1);
+        q.enqueue(3);
+        q.enqueue(5);
+        q.enqueue(2);
+        q.enqueue(4);
+        System.out.println("Original Queue");
+        for (int x : q) {
+            System.out.print(x + " ");
+        }
+        q = QuickSort.quickSort(q);
+        System.out.println();
+        System.out.println("Sorted Queue");
+        for (int x : q) {
+            System.out.print(x + " ");
+        }
     }
 }
