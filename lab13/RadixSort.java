@@ -46,8 +46,24 @@ public class RadixSort {
         int N = asciis.length;
         char[] charAtIndex = new char[N];
         for (int i = 0; i < N; i++) {
-            charAtIndex[i] = index < asciis[i].length() ? asciis[i].charAt(index) : '0';
+            //if asciis[i].length <= index, means this is a shorter string,so give it 0;
+            /*
+            2 0 9 len=3
+              1 2 len=2
+                1 len=1
+            if index = 0, charAtIndex is [9,2,1],
+            if index = 1, charAtIndex is [0,1,0],
+            2 0 9 len=3
+              1 2 len=2
+              0 1 len=1
+            if index = 2, charAtIndex is [2,0,0],
+            2 0 9 len=3
+            0 1 2 len=2
+            0 0 1 len=1
+             */
+            charAtIndex[i] = index >= asciis[i].length() ? '0' : asciis[i].charAt(index);
         }
+        //implements insertion sort,may be other sorting algorithm is faster
         for (int i = 0; i < N; i++) {
             for (int j = i; j > 0; j--) {
                 if (charAtIndex[j - 1] > charAtIndex[j]) {
@@ -77,7 +93,7 @@ public class RadixSort {
     }
 
     public static void main(String[] args) {
-        String[] str = {"356", "12", "904", "294", "209", "820", "394", "810"};
+        String[] str = {"356", "12", "904", "294", "209", "820", "394", "810", "1", ""};
         for (String s : str) {
             System.out.println(s + " ");
         }
