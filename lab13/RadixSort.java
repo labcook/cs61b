@@ -15,13 +15,15 @@ public class RadixSort {
      */
     public static String[] sort(String[] asciis) {
         int N = asciis.length;
+        int maxLength = 0;
         String[] sorted = new String[N];
         {
             for (int i = 0; i < N; i++) {
+                maxLength = asciis[i].length() > maxLength ? asciis[i].length() : maxLength;
                 sorted[i] = asciis[i];
             }
         }
-        for (int index = asciis[0].length() - 1; index >= 0; index--) {
+        for (int index = maxLength - 1; index >= 0; index--) {
             sortHelperLSD(sorted, index);
         }
         return sorted;
@@ -44,7 +46,7 @@ public class RadixSort {
         int N = asciis.length;
         char[] charAtIndex = new char[N];
         for (int i = 0; i < N; i++) {
-            charAtIndex[i] = asciis[i].charAt(index);
+            charAtIndex[i] = index < asciis[i].length() ? asciis[i].charAt(index) : '0';
         }
         for (int i = 0; i < N; i++) {
             for (int j = i; j > 0; j--) {
@@ -75,7 +77,7 @@ public class RadixSort {
     }
 
     public static void main(String[] args) {
-        String[] str = {"356", "112", "904", "294", "209", "820", "394", "810"};
+        String[] str = {"356", "12", "904", "294", "209", "820", "394", "810"};
         for (String s : str) {
             System.out.println(s + " ");
         }
