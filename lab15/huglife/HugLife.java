@@ -1,6 +1,7 @@
 package huglife;
 
-import creatures.*;
+import creatures.Clorus;
+import creatures.Plip;
 
 /**
  * World facing class for HugLife simulator.
@@ -141,6 +142,8 @@ public class HugLife {
                     break;
                 case "samplecreature":
                     h.addCreature(x, y, new SampleCreature());
+                    break;
+                default:
                     break;
             }
         }

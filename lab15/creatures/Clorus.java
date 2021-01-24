@@ -1,8 +1,12 @@
 package creatures;
 
-import huglife.*;
+import huglife.Action;
+import huglife.Creature;
+import huglife.Direction;
+import huglife.HugLifeUtils;
+import huglife.Occupant;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.List;
 import java.util.Map;
 

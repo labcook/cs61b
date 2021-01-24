@@ -1,9 +1,13 @@
 package creatures;
 
-import huglife.*;
+import huglife.Action;
+import huglife.Direction;
+import huglife.Impassible;
+import huglife.Occupant;
+import huglife.Empty;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.HashMap;
 
 import static org.junit.Assert.assertEquals;
