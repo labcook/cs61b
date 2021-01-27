@@ -8,7 +8,7 @@ public class SeamCarver {
     private double[][] iEnergy;
     private double[][] leastEnergy;
     private int[][] edgeTo;
-    Stack<Integer> s = new Stack<>();
+    private Stack<Integer> s = new Stack<>();
 
     public SeamCarver(Picture picture) {
         this.p = new Picture(picture);
@@ -34,6 +34,9 @@ public class SeamCarver {
 
     // energy of pixel at column x and row y
     public double energy(int x, int y) {
+        if (x < 0 || x >= width() || y < 0 || y >= height()) {
+            throw new java.lang.IndexOutOfBoundsException();
+        }
         double e = 0;
         Color left = p.get((x - 1 + width()) % width(), y);
         Color right = p.get((x + 1) % width(), y);
@@ -50,7 +53,7 @@ public class SeamCarver {
     }
 
     // sequence of indices for horizontal seam
-    public int[] findSeam(int width, int height, double[][] energyMatrix) {
+    private int[] findSeam(int width, int height, double[][] energyMatrix) {
         leastEnergy = new double[height][width];
         edgeTo = new int[height][width];
 
@@ -113,7 +116,7 @@ public class SeamCarver {
         return res;
     }
 
-    public double[][] transpose(double[][] energyMatrix) {
+    private double[][] transpose(double[][] energyMatrix) {
         int h = energyMatrix.length;
         int w = energyMatrix[0].length;
         double[][] res = new double[w][h];
@@ -145,14 +148,14 @@ public class SeamCarver {
         p = SeamRemover.removeVerticalSeam(p, seam);
     }
 
-    public double min(double a, double b) {
+    private double min(double a, double b) {
         if (a > b) {
             return b;
         }
         return a;
     }
 
-    public double min(double a, double b, double c) {
+    private double min(double a, double b, double c) {
         return min(min(a, b), c);
     }
 }
