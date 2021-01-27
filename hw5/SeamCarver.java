@@ -63,34 +63,41 @@ public class SeamCarver {
         //compute the least energy
         for (int i = 1; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                if (j == 0) {
-                    leastEnergy[i][j] = energyMatrix[i][j] + min(leastEnergy[i - 1][j],
-                            leastEnergy[i - 1][j + 1]);
-                    if (leastEnergy[i - 1][j] < leastEnergy[i - 1][j + 1]) {
-                        edgeTo[i][j] = j;
-                    } else {
-                        edgeTo[i][j] = j + 1;
-                    }
-
-                } else if (j == width - 1) {
-                    leastEnergy[i][j] = energyMatrix[i][j] + min(leastEnergy[i - 1][j - 1],
-                            leastEnergy[i - 1][j]);
-                    if (leastEnergy[i - 1][j] < leastEnergy[i - 1][j - 1]) {
-                        edgeTo[i][j] = j;
-                    } else {
-                        edgeTo[i][j] = j - 1;
-                    }
+                if (width == 1) {
+                    //only 1 item in a row
+                    leastEnergy[i][j] = energyMatrix[i][j] + leastEnergy[i - 1][j];
+                    edgeTo[i][j] = j;
                 } else {
-                    leastEnergy[i][j] = energyMatrix[i][j] + min(leastEnergy[i - 1][j - 1],
-                            leastEnergy[i - 1][j], leastEnergy[i - 1][j + 1]);
-                    int minIndex = j - 1;
-                    if (leastEnergy[i - 1][j] < leastEnergy[i - 1][j - 1]) {
-                        minIndex = j;
+                    //at least 2 items in a row
+                    if (j == 0) {
+                        leastEnergy[i][j] = energyMatrix[i][j] + min(leastEnergy[i - 1][j],
+                                leastEnergy[i - 1][j + 1]);
+                        if (leastEnergy[i - 1][j] < leastEnergy[i - 1][j + 1]) {
+                            edgeTo[i][j] = j;
+                        } else {
+                            edgeTo[i][j] = j + 1;
+                        }
+
+                    } else if (j == width - 1) {
+                        leastEnergy[i][j] = energyMatrix[i][j] + min(leastEnergy[i - 1][j - 1],
+                                leastEnergy[i - 1][j]);
+                        if (leastEnergy[i - 1][j] < leastEnergy[i - 1][j - 1]) {
+                            edgeTo[i][j] = j;
+                        } else {
+                            edgeTo[i][j] = j - 1;
+                        }
+                    } else {
+                        leastEnergy[i][j] = energyMatrix[i][j] + min(leastEnergy[i - 1][j - 1],
+                                leastEnergy[i - 1][j], leastEnergy[i - 1][j + 1]);
+                        int minIndex = j - 1;
+                        if (leastEnergy[i - 1][j] < leastEnergy[i - 1][j - 1]) {
+                            minIndex = j;
+                        }
+                        if (leastEnergy[i - 1][j + 1] < leastEnergy[i - 1][minIndex]) {
+                            minIndex = j + 1;
+                        }
+                        edgeTo[i][j] = minIndex;
                     }
-                    if (leastEnergy[i - 1][j + 1] < leastEnergy[i - 1][minIndex]) {
-                        minIndex = j + 1;
-                    }
-                    edgeTo[i][j] = minIndex;
                 }
             }
         }
@@ -140,11 +147,17 @@ public class SeamCarver {
 
     // remove horizontal seam from picture
     public void removeHorizontalSeam(int[] seam) {
+        if (height() <= 1) {
+            throw new java.lang.IllegalArgumentException();
+        }
         p = SeamRemover.removeHorizontalSeam(p, seam);
     }
 
     // remove vertical seam from picture
     public void removeVerticalSeam(int[] seam) {
+        if (width() <= 1) {
+            throw new java.lang.IllegalArgumentException();
+        }
         p = SeamRemover.removeVerticalSeam(p, seam);
     }
 
